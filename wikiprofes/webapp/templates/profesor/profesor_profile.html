@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block classI %}
+    <li>
+        <a href="{% url 'inicio'%}" aria-expanded="false">
+            <i class="ti-home menu-icon"></i><span class="nav-text">Inicio</span>
+        </a>
+    </li>
+{% endblock classI %}
+
+{% block content %}
+    <div class="barra contenedor card">
+        <form  class="contenedor mt-5 mb-5 login-input" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class = "border-bottom mb-4">Información del Profesor</legend>
+                {{ u_form|crispy }}
+                {{ p_form|crispy }}
+            </fieldset>
+            <div class="contenedor media">
+                <img class="rounded-circle account-img" style="max-height:120px; max-width:120px;">
+                <div class="media-body">
+                    <h3 class="account-heading">{{ profesor.nombre }}</h3>
+                    <p class="text-secondary">{{ profesor.correo }}</p>
+                    {%for materia in profesor.materia.all %}
+                        <p>{{materia}}</p>
+                    {%endfor%}
+                    
+                    
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="barra contenedor card">
+        <form  class="contenedor mt-5 mb-5 login-input" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class = "border-bottom mb-4">Comentarios</legend>
+                
+            </fieldset>
+            <div class="contenedor media">
+                <img class="rounded-circle account-img" style="max-height:120px; max-width:120px;">
+                <div class="media-body">
+                    
+
+
+                    {% if not profesor.comentarios.all %}
+                    Sin comentarios aun... <a href="#">Deja tu comentario!</div>
+                    
+                    {% else %}
+                        {% for comment in profesor.comentarios.all %}
+                            <strong style="color: black; font-size: medium;">{{comment.fecha}}</strong>
+                            <br>
+                            <p style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                            font-weight: 200; font-size: medium; color: black;">{{comment.comentario}}</p>
+                            <hr>
+                            <br>
+                            
+                        {% endfor %}
+                        
+                    {% endif %}
+                    <br>
+                    <br>
+                    {% if user.is_authenticated %}
+                        
+                        <br>
+                        <br>
+                    {% endif %}
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+
+    
+
+{% endblock content%}
+   

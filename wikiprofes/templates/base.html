@@ -1,0 +1,237 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>WikiProfes</title>
+    <!-- Favicon icon -->
+     <link rel="icon" type="image/png" sizes="18x18" href=" {% static 'images/wp.jpg' %} "> 
+    <!-- Custom Stylesheet -->
+    {% comment %} <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="css/normalize.css" as="style">
+    <link rel="stylesheet" href="css/normalize.css" as="style">
+    
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans&family=PT+Sans:wght@400;700&display=swap"  crossorigin="crossorigin" as="font">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="preload" href="css/style.css" as="style"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="css/style.css"> {% endcomment %}
+    <link href=" {% static 'css/style.css' %} " rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <div class="brand-logo">
+                <a href="{% url 'inicio'%}">
+                   {% comment "" %}
+                   <h1 class="logo__nombre">Wiki<span class="logo__bold">Profes</span> </h1>
+                   {% endcomment %} 
+                    <b class="logo logo-abbr"> <h3 class="logo">WP<span class="logo__bold"></span> </h3></b>  
+                     <span class="logo-compact"><img src="{% static './images/wikip-logo-compact.jpg' %} " alt=""></span> 
+                    <span class="brand-title">
+                        <h1 class="logo logo__nombre">WIKI<span class="logo logo__bold">Profes</span> </h1>
+                    </span> 
+                </a>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+        <!--
+            
+            
+            
+            -->
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">    
+            <div class="header-content clearfix">
+                
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+                <div class="header-left">
+                    <div class="input-group icons">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i class="mdi mdi-magnify"></i></span>
+                            <form class="d-flex" method = "POST" action="{%url 'search_profesor'%}">
+                                {% csrf_token %}
+                                </div>
+                                <input type="search" class="form-control me-2" placeholder="Profesor" aria-label="Search Dashboard" name="searched">
+                                <button class="btn btn-outline-secondary" style="margin-left: 0.5rem; border-radius: 10px;" type="submit">Buscar Profesor</button>
+                                <div class="drop-down   d-md-none">
+                                    <form action="#">
+                                        <input type="text" class="form-control" placeholder="Search">
+                                    </form>
+                                </div>
+                            </form>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="nk-sidebar">           
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label"></li>
+                        {% block classI %}
+                            <li>
+                                <a href="{% url 'inicio'%}" aria-expanded="false">
+                                    <i class="ti-home menu-icon"></i><span class="nav-text">Inicio</span>
+                                </a>
+                            </li>
+                        {% endblock classI %}
+                        {% block classB %}
+                            <li>
+                                <a  href="{% url 'buscar' %}" aria-expanded="false">
+                                    <i class="mdi mdi-magnify menu-icon"></i><span class="nav-text">Buscar</span>
+                                </a>
+                            </li>
+                        {% endblock classB %}
+
+
+                        {% if user.is_authenticated %}
+
+                            {% block classIS2 %}
+                            <li>
+                                <a  href="{% url 'profile' %}" aria-expanded="false">
+                                    <i class="icon-user menu-icon"></i><span class="nav-text">Perfil</span>
+                                </a>
+                            </li>
+                            {% endblock classIS2 %}
+                            {% block classIB %}
+                                <li>
+                                    <a  href="{% url 'logout' %}" aria-expanded="false">
+                                        <i class="fa fa-sign-out menu-icon" style="color: red;" ></i>
+                                        <span class="nav-text">Cerrar sesión</span>
+                                    </a>
+                                </li>
+                            {% endblock classIB %}
+
+                            {% if user.is_superuser %}
+                                {% block classIA %}
+                                <li>
+                                    <a  href="{% url 'read_profesor' %}" aria-expanded="false">
+                                        <i class="fa fa-users menu-icon"></i>
+                                        <span class="nav-text">Listar Profesores</span>
+                                    </a>
+                                </li>
+                                {% endblock classIA %}
+
+                            {% endif %}
+                            
+                        {% else %}
+                            {% block classR %}
+                                <li>
+                                    <a  href="{% url 'register' %}" aria-expanded="false">
+                                        <i class="icon-note menu-icon"></i><span class="nav-text">Registrarse</span>
+                                    </a>
+                                </li>
+                            {% endblock classR %}
+                            {% block classIS %}
+                                <li>
+                                    <a  href="{% url 'login' %}" aria-expanded="false">
+                                        <i class="icon-user menu-icon"></i><span class="nav-text">Iniciar Sesión</span>
+                                    </a>
+                                </li>
+                            {% endblock classIS %}
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        
+        <div class="content-body">
+        {%if messages %}
+            {%for message in messages%}
+                <div class="alert alert-{{message.tags}}">
+                        {{message}}
+                </div>
+            {%endfor%}
+        {%endif%}
+
+            {% block content %}
+            
+            
+            {% endblock %}
+            <!-- row -->
+
+            <div class="container-fluid">
+
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+        
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src=" {% static 'plugins/common/common.min.js' %} "></script>
+    <script src=" {% static 'js/custom.min.js' %} "></script>
+    <script src=" {% static 'js/settings.js' %} "></script>
+    <script src=" {% static 'js/gleek.js' %} "></script>
+    <script src=" {% static 'js/styleSwitcher.js' %} "></script>
+
+</body>
+
+</html>

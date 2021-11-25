@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block classI %}
+    <li>
+        <a class="active" href="{% url 'inicio'%}" aria-expanded="false">
+            <i class="ti-home menu-icon"></i><span class="nav-text">Inicio</span>
+        </a>
+    </li>
+{% endblock classI %}
+{% block content %}
+    {% if user.is_superuser %}
+    <h1>Inicio de sesion como administrador</h1>
+    {% else %}
+    <p>Hello, ordinary visitor.</p>
+    {% endif %}
+{% endblock  %}
+   

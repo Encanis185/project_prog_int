@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block classI %}
+    <li>
+        <a href="{% url 'inicio'%}" aria-expanded="false">
+            <i class="ti-home menu-icon"></i><span class="nav-text">Inicio</span>
+        </a>
+    </li>
+{% endblock classI %}
+{% block content %}
+    <div class="barra contenedor card">
+        <center>
+            {% if searched %}
+                <h1>
+                   La busqueda {{searched}} arrojo lo siguientes resultados 
+                </h1>
+                <br>
+                {% for p in profesor %}
+                    <a style="font-size: 25px; color: brown;" href= "{% url 'profesor_profile' p.idProfesor %}" > {{p}} </a>
+                    
+                {% endfor %}
+            {% else %}
+                <h1>Nada en el formulario</h1>
+            {% endif %}
+        </center>
+
+    </div>
+
+
+{% endblock  %}
+   
